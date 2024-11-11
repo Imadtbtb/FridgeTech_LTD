@@ -70,6 +70,8 @@ class LoginScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 32), // Spacing below the buttons
+
+            // Custom Email and Password Fields
             CustomTextField(
               controller: emailController,
               labelText: 'Email',
@@ -83,17 +85,30 @@ class LoginScreen extends StatelessWidget {
               obscureText: true,
             ),
             SizedBox(height: 32),
+
+            // Login Button
             ElevatedButton(
               onPressed: () {
                 // Handle login logic
               },
               child: Text('Login'),
             ),
+
+            // Register Button
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
               },
               child: Text('Don\'t have an account? Register'),
+            ),
+
+            // Chef Control Button (New Button)
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/chef_control');  // Navigate to Chef Control Panel
+              },
+              child: Text('Chef Control'),
             ),
           ],
         ),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
+import 'chef_control_panel.dart';  // Import the new ChefControlPanel screen
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
+        '/chef_control': (context) => ChefControlPanel(),  // Add route for Chef Control Panel
       },
     );
   }
