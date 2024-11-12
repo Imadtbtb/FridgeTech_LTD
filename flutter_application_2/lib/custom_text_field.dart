@@ -7,7 +7,8 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
 
-  CustomTextField({
+  const CustomTextField({
+    super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
@@ -22,7 +23,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }

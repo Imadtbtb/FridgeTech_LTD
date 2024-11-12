@@ -6,10 +6,12 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -17,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Title Text
-            Text(
+            const Text(
               'Login into your account',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -25,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
 
             // Social login buttons in a row
             Row(
@@ -36,8 +38,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle Facebook login
                   },
-                  icon: Icon(Icons.facebook, color: Colors.white),
-                  label: Text(''),
+                  icon: const Icon(Icons.facebook, color: Colors.white),
+                  label: const Text(''),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
@@ -48,8 +50,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle Email login
                   },
-                  icon: Icon(Icons.email, color: Colors.white),
-                  label: Text(''),
+                  icon: const Icon(Icons.email, color: Colors.white),
+                  label: const Text(''),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[700],
                   ),
@@ -60,8 +62,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle Apple login
                   },
-                  icon: Icon(Icons.apple, color: Colors.white),
-                  label: Text(''),
+                  icon: const Icon(Icons.apple, color: Colors.white),
+                  label: const Text(''),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                   ),
@@ -69,7 +71,7 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
 
-            SizedBox(height: 32), // Spacing below the buttons
+            const SizedBox(height: 32), // Spacing below the buttons
 
             // Custom Email and Password Fields
             CustomTextField(
@@ -77,21 +79,21 @@ class LoginScreen extends StatelessWidget {
               labelText: 'Email',
               hintText: 'Enter your email',
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextField(
               controller: passwordController,
               labelText: 'Password',
               hintText: 'Enter your password',
               obscureText: true,
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
 
             // Login Button
             ElevatedButton(
               onPressed: () {
                 // Handle login logic
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
 
             // Register Button
@@ -99,16 +101,17 @@ class LoginScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
               },
-              child: Text('Don\'t have an account? Register'),
+              child: const Text('Don\'t have an account? Register'),
             ),
 
             // Chef Control Button (New Button)
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/chef_control');  // Navigate to Chef Control Panel
+                Navigator.pushNamed(
+                    context, '/chef_control'); // Navigate to Chef Control Panel
               },
-              child: Text('Chef Control'),
+              child: const Text('Chef Control'),
             ),
           ],
         ),

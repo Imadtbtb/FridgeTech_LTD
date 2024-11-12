@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'base.dart';
 
 class ChefControlPanel extends StatelessWidget {
-  const ChefControlPanel({Key? key}) : super(key: key);
+  const ChefControlPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ChefControlPanel extends StatelessWidget {
             Container(
               height: 150,
               width: double.infinity,
-              color: Color(0xFFDDDDDD),
+              color: const Color(0xFFDDDDDD),
               margin: const EdgeInsets.only(bottom: 20),
               child: const Center(
                 child: Text(
@@ -38,11 +38,11 @@ class ChefControlPanel extends StatelessWidget {
             Container(
               height: 150,
               width: double.infinity,
-              color: Color(0xFFDDDDDD),
+              color: const Color(0xFFDDDDDD),
               margin: const EdgeInsets.only(bottom: 20),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Action History',
                     style: TextStyle(
@@ -58,10 +58,10 @@ class ChefControlPanel extends StatelessWidget {
             Container(
               height: 150,
               width: double.infinity,
-              color: Color(0xFFEEEEEE),
-              child: Column(
+              color: const Color(0xFFEEEEEE),
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Assign Tasks',
                     style: TextStyle(

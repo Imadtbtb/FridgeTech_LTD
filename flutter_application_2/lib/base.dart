@@ -1,4 +1,3 @@
-// base.dart
 import 'package:flutter/material.dart';
 import 'food_page.dart';
 import 'chef_control_panel.dart';
@@ -9,7 +8,7 @@ import 'contact_page.dart';
 class BaseScreen extends StatefulWidget {
   final Widget child;
 
-  const BaseScreen({Key? key, required this.child}) : super(key: key);
+  const BaseScreen({super.key, required this.child});
 
   @override
   _BaseScreenState createState() => _BaseScreenState();
@@ -18,13 +17,13 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 2; // Default to Home page
 
-  // List of pages to navigate to
+  // List of pages to navigate to, using aliases to prevent import conflicts
   final List<Widget> _pages = [
-    FoodPage(),
-    ChefControlPanel(),
-    HomePage(),
-    DeliveryPage(),
-    ContactPage(),
+    const FoodPage(),
+    const ChefControlPanel(),
+    const HomePage(),
+    const DeliveryPage(),
+    const ContactPage(),
   ];
 
   // Navigation function for changing tabs
@@ -64,9 +63,9 @@ class _BaseScreenState extends State<BaseScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: const Color.fromARGB(255, 184, 187, 190), // Bottom bar color
-        selectedItemColor: const Color.fromARGB(255, 75, 72, 72), // Color of selected icon/text
-        unselectedItemColor: const Color.fromARGB(164, 24, 23, 23), // Color of unselected icons/text
+        backgroundColor: const Color.fromARGB(255, 184, 187, 190),
+        selectedItemColor: const Color.fromARGB(255, 75, 72, 72),
+        unselectedItemColor: const Color.fromARGB(164, 24, 23, 23),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.fastfood),
