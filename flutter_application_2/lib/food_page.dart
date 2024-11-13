@@ -10,55 +10,212 @@ class FoodPage extends StatefulWidget {
 
 class _FoodPageState extends State<FoodPage> {
   List<TableRow> itemsTableRows = [
-    // Initial items in the table
     const TableRow(
       children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Tomatoes'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('50 kg'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('12/12/2024'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Fresh Farms'),
-        ),
+        Padding(padding: EdgeInsets.all(8.0), child: Text('Tomatoes')),
+        Padding(padding: EdgeInsets.all(8.0), child: Text('50 kg')),
+        Padding(padding: EdgeInsets.all(8.0), child: Text('12/12/2024')),
+        Padding(padding: EdgeInsets.all(8.0), child: Text('Fresh Farms')),
       ],
     ),
   ];
 
-  // Simulated new delivery item
-  final newDeliveryItem = const TableRow(
-    children: [
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Lettuce'),
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('30 kg'),
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('05/01/2025'),
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Eco Farms'),
-      ),
-    ],
-  );
-
-  void addItemToTable() {
+  void addItemToTable(
+      String name, String quantity, String expiryDate, String supplier) {
     setState(() {
-      itemsTableRows.add(newDeliveryItem);
+      itemsTableRows.add(
+        TableRow(
+          children: [
+            Padding(padding: EdgeInsets.all(8.0), child: Text(name)),
+            Padding(padding: EdgeInsets.all(8.0), child: Text(quantity)),
+            Padding(padding: EdgeInsets.all(8.0), child: Text(expiryDate)),
+            Padding(padding: EdgeInsets.all(8.0), child: Text(supplier)),
+          ],
+        ),
+      );
     });
+  }
+
+  void addDeliveryToInventory() {
+    addItemToTable("Lettuce", "30 kg", "05/01/2025", "Eco Farms");
+  }
+
+  void removeItemFromTable(String name) {
+    setState(() {
+      itemsTableRows.removeWhere((row) {
+        final itemName = (row.children?[0] as Padding).child as Text;
+        return itemName.data == name;
+      });
+    });
+  }
+
+  void editItemInTable(String name, String field, String newValue) {
+    setState(() {
+      for (int i = 0; i < itemsTableRows.length; i++) {
+        final row = itemsTableRows[i];
+        final itemName = (row.children?[0] as Padding).child as Text;
+        if (itemName.data == name) {
+          final updatedRow = row.children?.map((cell) {
+            if (field == 'Quantity' && cell == row.children?[1]) {
+              return Padding(
+                  padding: EdgeInsets.all(8.0), child: Text(newValue));
+            } else if (field == 'Expiry Date' && cell == row.children?[2]) {
+              return Padding(
+                  padding: EdgeInsets.all(8.0), child: Text(newValue));
+            } else if (field == 'Supplier' && cell == row.children?[3]) {
+              return Padding(
+                  padding: EdgeInsets.all(8.0), child: Text(newValue));
+            }
+            return cell;
+          }).toList();
+          if (updatedRow != null) {
+            itemsTableRows[i] = TableRow(children: updatedRow);
+          }
+          break;
+        }
+      }
+    });
+  }
+
+  Future<void> showAddDialog() async {
+    String name = '';
+    String quantity = '';
+    String expiryDate = '';
+    String supplier = '';
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Add Item'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: 'Item Name'),
+                onChanged: (value) => name = value,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Quantity'),
+                onChanged: (value) => quantity = value,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Expiry Date'),
+                onChanged: (value) => expiryDate = value,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Supplier'),
+                onChanged: (value) => supplier = value,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (name.isNotEmpty &&
+                    quantity.isNotEmpty &&
+                    expiryDate.isNotEmpty &&
+                    supplier.isNotEmpty) {
+                  addItemToTable(name, quantity, expiryDate, supplier);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> showRemoveDialog() async {
+    String name = '';
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Remove Item'),
+          content: TextField(
+            decoration: const InputDecoration(labelText: 'Item Name'),
+            onChanged: (value) => name = value,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                removeItemFromTable(name);
+                Navigator.pop(context);
+              },
+              child: const Text('Remove'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> showEditDialog() async {
+    String name = '';
+    String field = '';
+    String newValue = '';
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit Item'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: 'Item Name'),
+                onChanged: (value) => name = value,
+              ),
+              DropdownButtonFormField<String>(
+                items:
+                    ['Quantity', 'Expiry Date', 'Supplier'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) => field = value ?? '',
+                decoration: const InputDecoration(labelText: 'Field to Edit'),
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'New Value'),
+                onChanged: (value) => newValue = value,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (name.isNotEmpty &&
+                    field.isNotEmpty &&
+                    newValue.isNotEmpty) {
+                  editItemInTable(name, field, newValue);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -66,52 +223,31 @@ class _FoodPageState extends State<FoodPage> {
     return BaseScreen(
       child: Column(
         children: [
-          // Centered title in top bar
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Expanded(
-                  child: Center(
-                    child: Text(
-                      'Inventory Management',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Center(
+              child: Text(
+                'Inventory Management',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-          // Search bar with pen icon
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search item',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    // Add your edit action here
-                  },
-                ),
+                ElevatedButton(
+                    onPressed: showAddDialog, child: const Text('Add')),
+                const SizedBox(width: 8.0),
+                ElevatedButton(
+                    onPressed: showEditDialog, child: const Text('Edit')),
+                const SizedBox(width: 8.0),
+                ElevatedButton(
+                    onPressed: showRemoveDialog, child: const Text('Remove')),
               ],
             ),
           ),
           const SizedBox(height: 16.0),
-          // Main items table
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Table(
@@ -120,45 +256,32 @@ class _FoodPageState extends State<FoodPage> {
                 0: FlexColumnWidth(2),
                 1: FlexColumnWidth(1),
                 2: FlexColumnWidth(1),
-                3: FlexColumnWidth(2),
+                3: FlexColumnWidth(2)
               },
               children: [
-                // Header row
                 const TableRow(
                   decoration: BoxDecoration(color: Colors.grey),
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Item Name',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Item Name',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold))),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Quantity',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Quantity',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold))),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Expiry Date',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Expiry Date',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold))),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Supplier',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Supplier',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold))),
                   ],
                 ),
                 ...itemsTableRows,
@@ -166,88 +289,21 @@ class _FoodPageState extends State<FoodPage> {
             ),
           ),
           const SizedBox(height: 16.0),
-          // Action table with Add, Edit, Remove
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Table(
-              border: TableBorder.all(color: Colors.grey),
-              columnWidths: const {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-              },
-              children: const [
-                TableRow(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Add',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Edit',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Remove',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          const Text(
+            'New Delivery',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 16.0),
-          // New delivery item display
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'New Delivery',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/lettuce.jpg',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 16.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Item Name: Lettuce'),
-                        Text('Quantity: 30 kg'),
-                        Text('Expiry Date: 05/01/2025'),
-                        Text('Supplier: Eco Farms'),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                ElevatedButton(
-                  onPressed: addItemToTable,
-                  child: const Text('Add to Inventory'),
-                ),
-              ],
-            ),
+          const SizedBox(height: 8.0),
+          Image.asset('assets/lettuce.jpg', width: 100, height: 100),
+          const SizedBox(height: 8.0),
+          const Text(
+            'Lettuce - 30 kg - Expires: 05/01/2025 - Supplier: Eco Farms',
+            style: TextStyle(fontSize: 16),
           ),
+          const SizedBox(height: 8.0),
+          ElevatedButton(
+              onPressed: addDeliveryToInventory,
+              child: const Text('Add New Delivery to Inventory')),
         ],
       ),
     );
