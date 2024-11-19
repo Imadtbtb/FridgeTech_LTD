@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
-        '/chef_control': (context) =>
+        '/chef_control': (context) => //yhyhyh
             const ChefControlPanel(), // Add route for Chef Control Panel
       },
     );
