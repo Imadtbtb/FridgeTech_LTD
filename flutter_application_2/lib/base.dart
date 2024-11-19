@@ -11,13 +11,14 @@ class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key, required this.child});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BaseScreenState createState() => _BaseScreenState();
 }
 
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 2; // Default to Home page
 
-  // List of pages to navigate to, using aliases to prevent import conflicts
+  // List of pages to navigate to
   final List<Widget> _pages = [
     const FoodPage(),
     const ChefControlPanel(),
@@ -37,17 +38,23 @@ class _BaseScreenState extends State<BaseScreen> {
     );
   }
 
+  // Drawer navigation function
+  void _onDrawerItemTapped(int index) {
+    Navigator.pop(context); // Close the drawer
+    _onItemTapped(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 184, 187, 190),
-        title: const Text("FFsmart Fridge "),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            // Add functionality for hamburger icon if needed
-          },
+        title: const Text("FFsmart Fridge"),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
         actions: [
           IconButton(
@@ -57,6 +64,47 @@ class _BaseScreenState extends State<BaseScreen> {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 184, 187, 190),
+              ),
+              child: Text(
+                'FFsmart Fridge Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.fastfood),
+              title: const Text('Food'),
+              onTap: () => _onDrawerItemTapped(0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Chef'),
+              onTap: () => _onDrawerItemTapped(1),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () => _onDrawerItemTapped(2),
+            ),
+            ListTile(
+              leading: const Icon(Icons.local_shipping),
+              title: const Text('Delivery'),
+              onTap: () => _onDrawerItemTapped(3),
+            ),
+            ListTile(
+              leading: const Icon(Icons.support_agent),
+              title: const Text('Contact'),
+              onTap: () => _onDrawerItemTapped(4),
+            ),
+          ],
+        ),
       ),
       body: widget.child, // Show the passed-in child widget
       bottomNavigationBar: BottomNavigationBar(
