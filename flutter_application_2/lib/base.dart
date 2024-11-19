@@ -4,6 +4,7 @@ import 'chef_control_panel.dart';
 import 'home_page.dart';
 import 'delivery_page.dart';
 import 'contact_page.dart';
+import 'notification_service.dart';
 
 class BaseScreen extends StatefulWidget {
   final Widget child;
@@ -58,11 +59,14 @@ class _BaseScreenState extends State<BaseScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              // Add functionality for notifications if needed
-            },
-          ),
+              icon: const Icon(Icons.notifications),
+              onPressed: () {
+                NotificationService().showNotification(
+                  id: 1, // Unique notification ID
+                  title: 'New Alert',
+                  body: 'You have a new notification!',
+                );
+              })
         ],
       ),
       drawer: Drawer(
@@ -73,9 +77,20 @@ class _BaseScreenState extends State<BaseScreen> {
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 184, 187, 190),
               ),
-              child: Text(
-                'FFsmart Fridge Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 40, // Adjust the size of the logo
+                    backgroundImage:
+                        AssetImage('assets/logo.png'), // Add your logo here
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'FFsmart Fridge Menu',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                ],
               ),
             ),
             ListTile(
@@ -84,25 +99,16 @@ class _BaseScreenState extends State<BaseScreen> {
               onTap: () => _onDrawerItemTapped(0),
             ),
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Chef'),
-              onTap: () => _onDrawerItemTapped(1),
+              leading: const Icon(Icons.fastfood),
+              title: const Text('Food'),
+              onTap: () => _onDrawerItemTapped(0),
             ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () => _onDrawerItemTapped(2),
-            ),
-            ListTile(
-              leading: const Icon(Icons.local_shipping),
-              title: const Text('Delivery'),
-              onTap: () => _onDrawerItemTapped(3),
-            ),
-            ListTile(
-              leading: const Icon(Icons.support_agent),
-              title: const Text('Contact'),
-              onTap: () => _onDrawerItemTapped(4),
-            ),
+            _buildMenuItem(Icons.person, 'Profile', 0),
+            _buildMenuItem(Icons.settings, 'Settings', 1),
+            _buildMenuItem(Icons.shopping_bag, 'Re-ordering', 2),
+            _buildMenuItem(Icons.report, 'Health Safety', 3),
+            _buildMenuItem(Icons.group, 'User Management', 4),
+            _buildMenuItem(Icons.logout, 'Log out', 4),
           ],
         ),
       ),
@@ -136,6 +142,36 @@ class _BaseScreenState extends State<BaseScreen> {
             label: 'Contact',
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(IconData icon, String title, int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: 12.0, horizontal: 16.0), // Increased spacing
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300], // Darker background color
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: const Offset(0, 4), // Shadow position
+            ),
+          ],
+        ),
+        child: ListTile(
+          leading: Icon(icon, color: Colors.black),
+          title: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 16, color: Colors.black), // Slightly larger font
+          ),
+          onTap: () => _onDrawerItemTapped(index),
+        ),
       ),
     );
   }
