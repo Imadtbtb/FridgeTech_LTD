@@ -10,7 +10,7 @@ class _HealthSafetyReportState extends State<HealthSafetyReport> {
   bool _checkbox2 = false;
 
   void _showConfirmationDialog() {
-    // Reset the checkboxes to unchecked when the dialog is shown
+    // Reset the checkboxes to unchecked when the dialog
     setState(() {
       _checkbox1 = false;
       _checkbox2 = false;
@@ -227,7 +227,7 @@ Training on Equipment Use: Staff members are trained in the proper use of kitche
 Continuous training is essential to ensure the well-being of both employees and customers:
  
 Ongoing Training: Health and safety training is conducted for all new hires, with regular refresher courses. Topics include food safety, personal hygiene, fire safety, and emergency procedures.
-Accident Reporting and Investigation: All workplace accidents, no matter how minor, must be reported immediately. An investigation is conducted to determine the cause, and corrective actions are implemented to prevent recurrence.
+Accident Reporting and investigation: All workplace accidents, no matter how minor, must be reported immediately. An investigation is conducted to determine the cause, and corrective actions are implemented to prevent recurrence.
 7. Conclusion
 [Restaurant Name] is committed to providing a safe and healthy environment for its employees, customers, and visitors. Through regular training, thorough risk assessments, and the implementation of strict health and safety protocols, we aim to exceed industry standards and ensure the continued success of our operations.
                     ''',
