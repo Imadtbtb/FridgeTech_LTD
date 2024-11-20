@@ -26,10 +26,11 @@ class _FoodPageState extends State<FoodPage> {
       itemsTableRows.add(
         TableRow(
           children: [
-            Padding(padding: EdgeInsets.all(8.0), child: Text(name)),
-            Padding(padding: EdgeInsets.all(8.0), child: Text(quantity)),
-            Padding(padding: EdgeInsets.all(8.0), child: Text(expiryDate)),
-            Padding(padding: EdgeInsets.all(8.0), child: Text(supplier)),
+            Padding(padding: const EdgeInsets.all(8.0), child: Text(name)),
+            Padding(padding: const EdgeInsets.all(8.0), child: Text(quantity)),
+            Padding(
+                padding: const EdgeInsets.all(8.0), child: Text(expiryDate)),
+            Padding(padding: const EdgeInsets.all(8.0), child: Text(supplier)),
           ],
         ),
       );
@@ -43,7 +44,7 @@ class _FoodPageState extends State<FoodPage> {
   void removeItemFromTable(String name) {
     setState(() {
       itemsTableRows.removeWhere((row) {
-        final itemName = (row.children?[0] as Padding).child as Text;
+        final itemName = (row.children[0] as Padding).child as Text;
         return itemName.data == name;
       });
     });
@@ -53,18 +54,18 @@ class _FoodPageState extends State<FoodPage> {
     setState(() {
       for (int i = 0; i < itemsTableRows.length; i++) {
         final row = itemsTableRows[i];
-        final itemName = (row.children?[0] as Padding).child as Text;
+        final itemName = (row.children[0] as Padding).child as Text;
         if (itemName.data == name) {
-          final updatedRow = row.children?.map((cell) {
-            if (field == 'Quantity' && cell == row.children?[1]) {
+          final updatedRow = row.children.map((cell) {
+            if (field == 'Quantity' && cell == row.children[1]) {
               return Padding(
-                  padding: EdgeInsets.all(8.0), child: Text(newValue));
-            } else if (field == 'Expiry Date' && cell == row.children?[2]) {
+                  padding: const EdgeInsets.all(8.0), child: Text(newValue));
+            } else if (field == 'Expiry Date' && cell == row.children[2]) {
               return Padding(
-                  padding: EdgeInsets.all(8.0), child: Text(newValue));
-            } else if (field == 'Supplier' && cell == row.children?[3]) {
+                  padding: const EdgeInsets.all(8.0), child: Text(newValue));
+            } else if (field == 'Supplier' && cell == row.children[3]) {
               return Padding(
-                  padding: EdgeInsets.all(8.0), child: Text(newValue));
+                  padding: const EdgeInsets.all(8.0), child: Text(newValue));
             }
             return cell;
           }).toList();
@@ -232,6 +233,23 @@ class _FoodPageState extends State<FoodPage> {
               ),
             ),
           ),
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Search inventory...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                ),
+              ),
+              onChanged: (value) {
+                // Add logic to handle search here
+                print('Search term: $value');
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -247,6 +265,7 @@ class _FoodPageState extends State<FoodPage> {
               ],
             ),
           ),
+
           const SizedBox(height: 16.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

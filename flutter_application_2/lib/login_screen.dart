@@ -108,18 +108,27 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/chef_control'); // Navigate to Chef Control Panel
+                Navigator.pushNamed(
+                    context, '/chef_control'); // Navigate to Chef Control Panel
               },
               child: const Text('Chef Control'),
             ),
 
-            // New Chef Control Panel Button
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/User_Management'); // Navigate to Chef Control Panel
+                Navigator.pushNamed(context,
+                    '/User_Management'); // Navigate to Chef Control Panel
               },
               child: const Text('User Management'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context,
+                    '/health_safety_report'); // Navigate to Chef Control Panel
+              },
+              child: const Text('health_safety_report'),
             ),
           ],
         ),
