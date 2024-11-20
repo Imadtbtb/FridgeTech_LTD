@@ -4,7 +4,6 @@ import 'chef_control_panel.dart';
 import 'home_page.dart';
 import 'delivery_page.dart';
 import 'contact_page.dart';
-import 'notification_service.dart';
 
 class BaseScreen extends StatefulWidget {
   final Widget child;
@@ -12,7 +11,6 @@ class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key, required this.child});
 
   @override
-  // ignore: library_private_types_in_public_api
   _BaseScreenState createState() => _BaseScreenState();
 }
 
@@ -92,16 +90,6 @@ class _BaseScreenState extends State<BaseScreen> {
                   ),
                 ],
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.fastfood),
-              title: const Text('Food'),
-              onTap: () => _onDrawerItemTapped(0),
-            ),
-            ListTile(
-              leading: const Icon(Icons.fastfood),
-              title: const Text('Food'),
-              onTap: () => _onDrawerItemTapped(0),
             ),
             _buildMenuItem(Icons.person, 'Profile', 0),
             _buildMenuItem(Icons.settings, 'Settings', 1),
