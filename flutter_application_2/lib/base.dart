@@ -4,19 +4,19 @@ import 'chef_control_panel.dart';
 import 'home_page.dart';
 import 'delivery_page.dart';
 import 'contact_page.dart';
-
+ 
 class BaseScreen extends StatefulWidget {
   final Widget child;
-
+ 
   const BaseScreen({super.key, required this.child});
-
+ 
   @override
   _BaseScreenState createState() => _BaseScreenState();
 }
-
+ 
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 2; // Default to Home page
-
+ 
   // List of pages to navigate to
   final List<Widget> _pages = [
     const FoodPage(),
@@ -25,7 +25,7 @@ class _BaseScreenState extends State<BaseScreen> {
     const DeliveryPage(),
     const ContactPage(),
   ];
-
+ 
   // Navigation function for changing tabs
   void _onItemTapped(int index) {
     setState(() {
@@ -36,13 +36,13 @@ class _BaseScreenState extends State<BaseScreen> {
       MaterialPageRoute(builder: (context) => _pages[index]),
     );
   }
-
+ 
   // Drawer navigation function
   void _onDrawerItemTapped(int index) {
     Navigator.pop(context); // Close the drawer
     _onItemTapped(index);
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,14 +57,10 @@ class _BaseScreenState extends State<BaseScreen> {
         ),
         actions: [
           IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                NotificationService().showNotification(
-                  id: 1, // Unique notification ID
-                  title: 'New Alert',
-                  body: 'You have a new notification!',
-                );
-              })
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+            },
+          ),
         ],
       ),
       drawer: Drawer(
@@ -100,7 +96,7 @@ class _BaseScreenState extends State<BaseScreen> {
           ],
         ),
       ),
-      body: widget.child, // Show the passed-in child widget
+      body: widget.child, // Show the passed-in child widgetuhuh
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
@@ -133,7 +129,7 @@ class _BaseScreenState extends State<BaseScreen> {
       ),
     );
   }
-
+ 
   Widget _buildMenuItem(IconData icon, String title, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -147,7 +143,7 @@ class _BaseScreenState extends State<BaseScreen> {
               color: Colors.grey.withOpacity(0.2),
               blurRadius: 8,
               spreadRadius: 2,
-              offset: const Offset(0, 4), // Shadow position
+              offset: Offset(0, 4), // Shadow position
             ),
           ],
         ),
