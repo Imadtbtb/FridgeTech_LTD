@@ -4,6 +4,7 @@ import 'login_screen.dart';
 import 'register_screen.dart';
 import 'chef_control_panel.dart'; // Import the new ChefControlPanel screen
 import 'User_Management.dart';
+import 'health_safety_report.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterScreen(),
         '/chef_control': (context) => //yhyhyh
             const ChefControlPanel(), // Add route for Chef Control Panel
-            '/User_Management': (context) => UserManagementPage(),
+        '/User_Management': (context) => const UserManagementPage(),
+        '/health_safety_report': (context) => HealthSafetyReport(),
       },
     );
   }
