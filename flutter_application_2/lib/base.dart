@@ -4,7 +4,12 @@ import 'chef_control_panel.dart';
 import 'home_page.dart';
 import 'delivery_page.dart';
 import 'contact_page.dart';
- 
+import 'notification_page.dart'; // Import NotificationPage
+import 'health_safety_report.dart';
+import 'User_Management.dart';
+import 'profile.dart';
+import 'reordering_page.dart';
+
 class BaseScreen extends StatefulWidget {
   final Widget child;
  
@@ -17,13 +22,18 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 2; // Default to Home page
  
-  // List of pages to navigate to
+  // List of pages to navigate to (for bottom navigation only)
   final List<Widget> _pages = [
     const FoodPage(),
     const ChefControlPanel(),
     const HomePage(),
     const DeliveryPage(),
     const ContactPage(),
+    HealthSafetyReport(),
+    UserManagementPage(),
+    ReorderingPage(),
+    ProfilePage(),
+
   ];
  
   // Navigation function for changing tabs
@@ -48,7 +58,14 @@ class _BaseScreenState extends State<BaseScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 184, 187, 190),
-        title: const Text("FFsmart Fridge"),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/logo.png', // Path to your logo image
+              height: 150, // Adjust size as needed
+            ),
+          ],
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
@@ -59,6 +76,11 @@ class _BaseScreenState extends State<BaseScreen> {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationPage()),
+              );
             },
           ),
         ],
@@ -75,9 +97,9 @@ class _BaseScreenState extends State<BaseScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 40, // Adjust the size of the logo
+                    radius: 40, // Adjust size of logo
                     backgroundImage:
-                        AssetImage('assets/logo.png'), // Add your logo here
+                        AssetImage('assets/logo.png'), // Add your logo asset
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -87,16 +109,15 @@ class _BaseScreenState extends State<BaseScreen> {
                 ],
               ),
             ),
-            _buildMenuItem(Icons.person, 'Profile', 0),
-            _buildMenuItem(Icons.settings, 'Settings', 1),
-            _buildMenuItem(Icons.shopping_bag, 'Re-ordering', 2),
-            _buildMenuItem(Icons.report, 'Health Safety', 3),
-            _buildMenuItem(Icons.group, 'User Management', 4),
+            _buildMenuItem(Icons.person, 'Profile', 7),
+            _buildMenuItem(Icons.shopping_bag, 'Re-ordering', 8),
+            _buildMenuItem(Icons.report, 'Health Safety', 5),
+            _buildMenuItem(Icons.group, 'User Management', 6),
             _buildMenuItem(Icons.logout, 'Log out', 4),
           ],
         ),
       ),
-      body: widget.child, // Show the passed-in child widgetuhuh
+      body: widget.child, // Show the passed-in child widget
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
